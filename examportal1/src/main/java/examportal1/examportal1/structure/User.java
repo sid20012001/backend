@@ -50,6 +50,8 @@ public class User implements UserDetails {
 
 
 
+    //this
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
