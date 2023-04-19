@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Optional;
 
@@ -97,6 +98,11 @@ public class Controller {
         else {
             throw new UsernameNotFoundException("User not found");
         }
+    }
+
+    @GetMapping("/getCurrentUser")
+    public UserDetails getCurrentUser(Principal principal){
+        return   (this.userDetailsService.loadUserByUsername(principal.getName()));
     }
 
 
