@@ -13,10 +13,6 @@ import java.util.Set;
 @Entity
 public class User implements UserDetails {
 
-
-
-
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -32,10 +28,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
@@ -45,6 +37,25 @@ public class User implements UserDetails {
         });
         return set;
     }
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public String getPassword() {
+        return password;
+    }
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
     //this
 
 
@@ -78,9 +89,7 @@ public class User implements UserDetails {
         this.profile = profile;
         this.userRoles = userRoles;
     }
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
+
     public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
@@ -96,15 +105,7 @@ public class User implements UserDetails {
     public void setId(long id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
-    }
 
-
-
-    public String getPassword() {
-        return password;
-    }
     public void setPassword(String password) {
         this.password = password;
     }
@@ -132,9 +133,7 @@ public class User implements UserDetails {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    public boolean isEnabled() {
-        return enabled;
-    }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -157,12 +156,12 @@ public class User implements UserDetails {
     }
 
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
-                + ", lastname=" + lastname + ", email=" + email + ", phone=" + phone + ", enabled=" + enabled
-                + ", profile=" + profile + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "User [id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname
+//                + ", lastname=" + lastname + ", email=" + email + ", phone=" + phone + ", enabled=" + enabled
+//                + ", profile=" + profile + "]";
+//    }
 
 
 
