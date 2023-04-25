@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 public class Controller {
 
     @Autowired
@@ -46,8 +46,6 @@ public class Controller {
     @Autowired
     JwtUtil jwtUtil;
 
-
-
     @PostMapping("/user")
     public User postUser(@RequestBody User user ) throws Exception {
         Role role=new Role();
@@ -61,18 +59,21 @@ public class Controller {
         return this.postUserService.createUser(user, set1);
     }
 
+    @CrossOrigin("*")
     @GetMapping("/{no}")
     public Optional<User> getUser(@PathVariable("no")Long no){
         return getUserService.getuser(no);
     }
 
 
+    @CrossOrigin("*")
     @PutMapping("/{name}")
     public User updateUser(@RequestBody User user,@PathVariable ("name")String name) throws Exception {
         return this.putUserService.updateuser(name, user);
     }
 
 
+    @CrossOrigin("*")
     @DeleteMapping("/{username}")
     public User deleteUser(@PathVariable("username")String username) {
 
@@ -80,7 +81,8 @@ public class Controller {
 
     }
 
-    @PostMapping("/authenticate")
+    @CrossOrigin("*")
+    @PostMapping("/generate-token")
     public ResponseToken authenticate(@RequestBody RequestCredentical requestCredentical){
         //here is the code authntication
         Authentication authentication = authenticationManager.authenticate(
@@ -100,10 +102,13 @@ public class Controller {
         }
     }
 
-    @GetMapping("/getCurrentUser")
-    public UserDetails getCurrentUser(Principal principal){
-        return   (this.userDetailsService.loadUserByUsername(principal.getName()));
+
+    @GetMapping("/current-user")
+    public UserDetails UsergetCurrentUser(Principal principal, @RequestHeader("Authorization") String authorizationHeader){
+        System.out.println("Authorization header: " + authorizationHeader);
+        return (this.userDetailsService.loadUserByUsername(principal.getName()));
     }
+
 
 
 
