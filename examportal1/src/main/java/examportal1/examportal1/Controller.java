@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -46,14 +47,18 @@ public class Controller {
     @Autowired
     JwtUtil jwtUtil;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PostMapping("/user")
     public User postUser(@RequestBody User user ) throws Exception {
         Role role=new Role();
-        role.setRoleId(1L);
+        role.setRoleId(2L);
         role.setRoleName("Normal");
         UserRole urr=new UserRole();
         urr.setUser(user);
         urr.setRole(role);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         HashSet<UserRole> set1=new HashSet<UserRole>();
         set1.add(urr);
         return this.postUserService.createUser(user, set1);
