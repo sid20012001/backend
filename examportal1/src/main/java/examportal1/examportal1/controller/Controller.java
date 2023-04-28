@@ -1,4 +1,4 @@
-package examportal1.examportal1;
+package examportal1.examportal1.controller;
 
 
 import examportal1.examportal1.Utility.JwtUtil;
@@ -49,6 +49,9 @@ public class Controller {
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/user")
     public User postUser(@RequestBody User user ) throws Exception {
@@ -109,9 +112,9 @@ public class Controller {
 
 
     @GetMapping("/current-user")
-    public UserDetails UsergetCurrentUser(Principal principal, @RequestHeader("Authorization") String authorizationHeader){
-        System.out.println("Authorization header: " + authorizationHeader);
-        return (this.userDetailsService.loadUserByUsername(principal.getName()));
+    public UserDetails getCurrentUser(Principal principal)
+    {
+        return this.customUserDetailsService.loadUserByUsername(principal.getName());
     }
 
 
