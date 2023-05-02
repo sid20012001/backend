@@ -12,36 +12,45 @@ import java.util.Set;
 @Service
 public class QuestionServiceImpl implements QuestionService{
     @Autowired
-    public QuestionRepo questionRepo;
+    private QuestionRepo questionRepository;
+
+
     @Override
     public Question addQuestion(Question question) {
-        return  this.questionRepo.save(question);
+        return this.questionRepository.save(question);
     }
 
     @Override
     public Question updateQuestion(Question question) {
-        return  this.questionRepo.save(question);
+        return this.questionRepository.save(question);
     }
 
     @Override
     public Set<Question> getQuestions() {
-        return new HashSet<>( this.questionRepo.findAll());
+        return new HashSet<>(this.questionRepository.findAll());
     }
 
     @Override
-    public Question getQuestion(Long id) {
-        return this.questionRepo.findById(id).get();
+    public Question getQuestion(Long questionId) {
+        return this.questionRepository.findById(questionId).get();
     }
 
     @Override
     public Set<Question> getQuestionsOfQuiz(Quiz quiz) {
-       return this.questionRepo.findByQuiz(quiz);
+        return this.questionRepository.findByQuiz(quiz);
     }
 
     @Override
-    public Question deleteQuestion(Long id) {
-        Question question=this.questionRepo.findById(id).get();
-        this.questionRepo.deleteById(id);
-        return question;
+    public void deleteQuestion(Long quesId) {
+        Question question = new Question();
+        question.setQueId(quesId);
+        this.questionRepository.delete(question);
     }
+
+    @Override
+    public Question get(Long questionsId) {
+        return this.questionRepository.getOne(questionsId);
+    }
+
+
 }

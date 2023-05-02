@@ -7,7 +7,6 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long queId;
-
     String content;
     String image;
     String answer;

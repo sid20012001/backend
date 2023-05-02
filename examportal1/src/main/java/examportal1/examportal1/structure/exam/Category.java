@@ -15,10 +15,10 @@ public class Category {
     Long cid;
 
     @Column(length = 2000)
-    String title;
+    private String title;
 
     @Column(length = 2000)
-    String description;
+    private String description;
 
     @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL,mappedBy = "category")
     @JsonIgnore

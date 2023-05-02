@@ -1,63 +1,62 @@
 package examportal1.examportal1.structure.exam;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+
+import javax.xml.transform.Result;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 @Entity
 public class Quiz {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long qid;
+    private  long qid;
+    private  String title;
+    private  String description;
+    private  boolean active=false;
+    private String maxMarks;
+    private  String noOfQuestions;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private  Category category;
 
-    boolean active;
-
-    String title;
-
-    String description;
-
-    long maxMark;
-
-    long numberOfQuestion;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    Category category;
-
-    @OneToMany(mappedBy = "quiz",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
     @JsonIgnore
-    Set<Question> question=new HashSet<Question>();
+    private List<Result>results=new ArrayList<>();
 
-    public Quiz() {
+    public List<Result> getResults() {
+        return results;
     }
 
-    public Quiz(Long qid, boolean active, String title, String description, long maxMark, long numberOfQuestion, Category category, Set<Question> question) {
-        this.qid = qid;
-        this.active = active;
-        this.title = title;
-        this.description = description;
-        this.maxMark = maxMark;
-        this.numberOfQuestion = numberOfQuestion;
-        this.category = category;
-        this.question = question;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
-    public Long getQid() {
+    public Set<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
+    }
+
+    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Question>questions =new HashSet<>();
+
+    public long getQid() {
         return qid;
     }
 
-    public void setQid(Long qid) {
+    public void setQid(long qid) {
         this.qid = qid;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public String getTitle() {
@@ -76,20 +75,28 @@ public class Quiz {
         this.description = description;
     }
 
-    public long getMaxMark() {
-        return maxMark;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setMaxMark(long maxMark) {
-        this.maxMark = maxMark;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public long getNumberOfQuestion() {
-        return numberOfQuestion;
+    public String getMaxMarks() {
+        return maxMarks;
     }
 
-    public void setNumberOfQuestion(long numberOfQuestion) {
-        this.numberOfQuestion = numberOfQuestion;
+    public void setMaxMarks(String maxMarks) {
+        this.maxMarks = maxMarks;
+    }
+
+    public String getNoOfQuestions() {
+        return noOfQuestions;
+    }
+
+    public void setNoOfQuestions(String noOfQuestions) {
+        this.noOfQuestions = noOfQuestions;
     }
 
     public Category getCategory() {
@@ -100,11 +107,25 @@ public class Quiz {
         this.category = category;
     }
 
-    public Set<Question> getQuestion() {
-        return question;
+    public Quiz() {
     }
 
-    public void setQuestion(Set<Question> question) {
-        this.question = question;
+    public Quiz(String title, String description, boolean active, String maxMarks, String noOfQuestions, Category category) {
+        this.title = title;
+        this.description = description;
+        this.active = active;
+        this.maxMarks = maxMarks;
+        this.noOfQuestions = noOfQuestions;
+        this.category = category;
+    }
+
+    public Quiz(long qid, String title, String description, boolean active, String maxMarks, String noOfQuestions, Category category) {
+        this.qid = qid;
+        this.title = title;
+        this.description = description;
+        this.active = active;
+        this.maxMarks = maxMarks;
+        this.noOfQuestions = noOfQuestions;
+        this.category = category;
     }
 }

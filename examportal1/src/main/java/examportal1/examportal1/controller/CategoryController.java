@@ -1,13 +1,11 @@
 package examportal1.examportal1.controller;
-
 import examportal1.examportal1.service.AdminService.CategoryService;
 import examportal1.examportal1.service.AdminService.CategoryServiceImpl;
 import examportal1.examportal1.structure.exam.Category;
-import jakarta.persistence.UniqueConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
 
 @RestController
 @RequestMapping("/category")
@@ -15,33 +13,40 @@ import java.util.Set;
 public class CategoryController {
 
     @Autowired
-    public CategoryServiceImpl categoryService;
+    private CategoryServiceImpl categoryService;
+
+
+    //add Category
 
     @PostMapping("/")
-    public String addCategory(@RequestBody Category category){
-       this.categoryService.addCategory(category);
-       return "category added successfully";
+    public ResponseEntity<Category> addCategory(@RequestBody Category category){
+        Category category1 = this.categoryService.addCategory(category);
+        return ResponseEntity.ok(category1);
+    }
 
+
+    // get category
+    @GetMapping("/{categoryId}")
+    public Category getCategory (@PathVariable("categoryId") Long categoryId){
+        return this.categoryService.getCategory(categoryId);
     }
-    @GetMapping("/{id}")
-    public Category getCategory(@PathVariable ("id") Long id){
-        Category category= this.categoryService.getCategory(id);
-        return category;
-    }
+
+
+    //get all category
     @GetMapping("/")
-    public Set<Category> getAllCategory(){
-        return this.categoryService.getCategories();
+    public ResponseEntity<?> getCategory(){
+        return ResponseEntity.ok(this.categoryService.getCategories());
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable ("id") Long id){
-
-        this.categoryService.deleteCategory(id);
-
+    //update category
+    @PutMapping("/")
+    public Category updateCategory(@RequestBody Category category) {
+        return this.categoryService.updateCategory(category);
     }
-    @PutMapping("/update")
-    public Category updateCategory(@RequestBody Category category){
-        this.categoryService.updateCategory(category);
-        return category;
+
+    //delete category
+    @DeleteMapping("/{categoryId}")
+    public void deleteCategory(@PathVariable("categoryId") Long categoryId) {
+        this.categoryService.deleteCategory(categoryId);
     }
 }
