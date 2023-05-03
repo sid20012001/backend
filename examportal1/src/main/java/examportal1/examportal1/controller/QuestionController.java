@@ -1,9 +1,7 @@
 package examportal1.examportal1.controller;
 
 import examportal1.examportal1.service.AdminService.QuestionService;
-import examportal1.examportal1.service.AdminService.QuestionServiceImpl;
 import examportal1.examportal1.service.AdminService.QuizService;
-import examportal1.examportal1.service.AdminService.QuizServiceImpl;
 import examportal1.examportal1.structure.exam.Question;
 import examportal1.examportal1.structure.exam.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class QuestionController {
     //add question
     @PostMapping("/")
     public ResponseEntity<Question> add(@RequestBody Question question) {
-        System.out.println("Question" + question);
+
         return ResponseEntity.ok(this.service.addQuestion(question));
     }
 
@@ -37,7 +35,7 @@ public class QuestionController {
         return ResponseEntity.ok(this.service.updateQuestion(question));
     }
 
-    @GetMapping("/{quesId}")
+    @GetMapping("/{qid}")
     public Question get(@PathVariable("quesId") Long quesId) {
         return this.service.getQuestion(quesId);
     }

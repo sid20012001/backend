@@ -1,21 +1,12 @@
 package examportal1.examportal1.structure.exam;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-
-import javax.xml.transform.Result;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity
 public class Quiz {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private  long qid;
@@ -29,27 +20,8 @@ public class Quiz {
 
     @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Result>results=new ArrayList<>();
+    private List<Question>questions=new ArrayList<>();
 
-    public List<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
-    }
-
-    public Set<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        this.questions = questions;
-    }
-
-    @OneToMany(mappedBy = "quiz",cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Question>questions =new HashSet<>();
 
     public long getQid() {
         return qid;
@@ -107,19 +79,15 @@ public class Quiz {
         this.category = category;
     }
 
-    public Quiz() {
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public Quiz(String title, String description, boolean active, String maxMarks, String noOfQuestions, Category category) {
-        this.title = title;
-        this.description = description;
-        this.active = active;
-        this.maxMarks = maxMarks;
-        this.noOfQuestions = noOfQuestions;
-        this.category = category;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
-    public Quiz(long qid, String title, String description, boolean active, String maxMarks, String noOfQuestions, Category category) {
+    public Quiz(long qid, String title, String description, boolean active, String maxMarks, String noOfQuestions, Category category, List<Question> questions) {
         this.qid = qid;
         this.title = title;
         this.description = description;
@@ -127,5 +95,9 @@ public class Quiz {
         this.maxMarks = maxMarks;
         this.noOfQuestions = noOfQuestions;
         this.category = category;
+        this.questions = questions;
+    }
+
+    public Quiz() {
     }
 }

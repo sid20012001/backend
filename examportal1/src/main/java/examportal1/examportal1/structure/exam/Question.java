@@ -1,7 +1,6 @@
 package examportal1.examportal1.structure.exam;
 
 import jakarta.persistence.*;
-import org.springframework.security.core.Authentication;
 @Entity
 public class Question {
     @Id
@@ -18,8 +17,6 @@ public class Question {
     @ManyToOne(fetch = FetchType.EAGER)
     private Quiz quiz;
 
-    public Question() {
-    }
 
     public Long getQueId() {
         return queId;
@@ -103,5 +100,8 @@ public class Question {
         this.option3 = option3;
         this.option4 = option4;
         this.quiz = quiz;
+    }
+
+    public Question() {
     }
 }

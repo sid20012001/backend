@@ -1,13 +1,11 @@
 package examportal1.examportal1.controller;
 
+import examportal1.examportal1.service.AdminService.QuizService;
 import examportal1.examportal1.service.AdminService.QuizServiceImpl;
 import examportal1.examportal1.structure.exam.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
-
 
 @RestController
 @RequestMapping("/quiz")
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class QuizController {
 
     @Autowired
-    private QuizServiceImpl quizService;
+    private QuizService quizService;
 
     //add quiz
     @PostMapping("/")
@@ -40,7 +38,6 @@ public class QuizController {
     @GetMapping("{qid}")
     public Quiz getSingleQuiz(@PathVariable("qid") Long qid)
     {
-        System.out.println("Geettting single quiz");
         return this.quizService.getQuiz(qid);
     }
     //delete Quiz
